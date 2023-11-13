@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Kişisel web sayfanızın kısa açıklaması.">
+  <meta name="keywords" content="HTML, CSS, Tailwind, Personal Website">
+  <meta name="author" content="Adınız">
+  <title>Adınızın Web Sayfası</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="gradient-bg text-lavander">
+  <div class="container mx-auto px-4">
+    <div class="pt-8">
+      <h1 id="name" class="text-3xl font-bold"></h1>
+      <p id="profession" class="text-xl mt-2"></p>
+      <p id="shortBio" class="text-base mt-1 text-whiteish-gray"></p>
+      <div class="flex mt-4">
+        <a id="githubLink" href="#" class="mr-4"><i class="bi bi-github"></i></a>
+        <a id="instagramLink" href="#" class="mr-4"><i class="bi bi-instagram"></i></a>
+        <a id="linkedinLink" href="#" class="mr-4"><i class="bi bi-linkedin"></i></a>
+        <a id="telegramLink" href="#"><i class="bi bi-telegram"></i></a>
+      </div>
+    </div>
+    <div class="mt-8">
+      <h2 class="text-2xl">About</h2>
+      <p id="aboutContent" class="text-sm mt-2 text-whiteish-gray"></p>
+    </div>
+    <div class="mt-8">
+      <h2 class="text-2xl">Experience</h2>
+      <div id="experienceSection" class="mt-4"></div>
+    </div>
+    <div class="mt-8">
+      <h2 class="text-2xl">Projects</h2>
+      <div id="projectsSection" class="mt-4"></div>
+    </div>
+    <div class="mt-8">
+      <h2 class="text-2xl">Writing</h2>
+      <div id="writingSection" class="mt-4"></div>
+    </div>
+  </div>
+  <script>
+    const userProfile = {
+      name: 'Qiyas Sadıqov',
+      profession: 'Fullstack Developer',
+      shortBio: 'I can code anything you can think of.I can code anything you can think of. 🧑‍💻',
+      socialLinks: {
+        github: 'https://github.com/qiyascc',
+        instagram: 'https://instagram.com/qiyascc',
+        linkedin: 'https://linkedin.com/in/qiyascc',
+        telegram: 'https://t.me/qiyascc'
+      },
+      aboutText: 'Detailed about section text. <strong>Important part</strong> of the text.',
+      experience: [
+        {
+          dateRange: 'date - date',
+          title: 'Exoerince title',
+          description: 'Experince detail'.',
+          technologies: ['Node.Js', 'SQL', 'Express','Flutter','Node.Js', 'SQL', 'Express', 'Flutter']
+        },
+        {
+
+          dateRange: 'date - date',
+          title: 'Experince Title',
+          description: 'Experince detail.',
+          technologies: ['React', 'JavaScript', 'TypeScript']
+
+        }
+      ],
+      projects: [
+        {
+          title: 'Project Title',
+          description: 'Project Description ',
+          imageUrl: "https://via.placeholder.com/160x90",
+          technologies: ['HTML', 'CSS', 'JavaScript']
+        },
+      ],
+      writings: [
+        {
+          imageUrl: "https://via.placeholder.com/160x90",
+          date: "2023",
+          title: "Writing Title",
+          link: "https://example.com"
+    },
+  ]
+    };
+
+    document.getElementById('name').textContent = userProfile.name;
+    document.getElementById('profession').textContent = userProfile.profession;
+    document.getElementById('shortBio').textContent = userProfile.shortBio;
+
+    Object.entries(userProfile.socialLinks).forEach(([key, value]) => {
+      document.getElementById(`${key}Link`).href = value;
+    });
+
+    document.getElementById('aboutContent').innerHTML = userProfile.aboutText;
+
+    const experienceSection = document.getElementById('experienceSection');
+
+    userProfile.experience.forEach((exp, index) => {
+      const marginBottomClass = index < userProfile.experience.length - 1 ? 'mb-10' : '';
+      const experienceHTML = `
+    <div class="mt-4 ${marginBottomClass}">
+      <p class="text-sm text-whiteish-gray">${exp.dateRange}</p>
+      <h3 class="text-xl font-semibold">${exp.title}</h3>
+      <p class="text-base text-whiteish-gray">${exp.description}</p>
+      <div class="flex flex-wrap mt-2">
+  ${exp.technologies.map(tech => `<span class="technology-item rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">${tech}</span>`).join('')}
+</div>
+    </div>
+  `;
+      experienceSection.innerHTML += experienceHTML;
+    });
+
+    const projectsSection = document.getElementById('projectsSection');
+    userProfile.projects.forEach(project => {
+      const projectHTML = `
+    <div class="mb-10">
+      <h3 class="text-xl font-semibold">${project.title}</h3>
+      <p class="text-base text-whiteish-gray">${project.description}</p>
+      <div id="projectImageContainer" class="w-1/2 mt-4 bg-cover bg-center" style="background-image: url('${project.imageUrl}');">
+      </div>
+      <div class="flex flex-wrap mt-2">
+        ${project.technologies.map(tech => `<span class="technology-item rounded-full px-3 py-1 text-sm font-semibold mr-2">${tech}</span>`).join('')}
+      </div>
+      
+    </div>
+  `;
+      projectsSection.innerHTML += projectHTML;
+    });
+
+    function adjustImageHeight() {
+      var container = document.getElementById('projectImageContainer');
+      var width = container.offsetWidth;
+      var height = (width * 9) / 16;
+      container.style.height = height + 'px';
+    }
+    window.onload = adjustImageHeight;
+    window.onresize = adjustImageHeight;
+
+
+
+    const writingSection = document.getElementById('writingSection');
+    userProfile.writings.forEach(writing => {
+      const writingHTML = `
+      <div class="flex items-center mb-2.5">
+        <div class="w-20 aspect-w-16 aspect-h-9 mr-2">
+          <img src="${writing.imageUrl}" alt="Writing Image" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <p class="text-sm text-whiteish-gray">${writing.date}</p>
+          <a href="${writing.link}" class="text-base text-lavander">${writing.title}</a>
+        </div>
+      </div>
+    `;
+      writingSection.innerHTML += writingHTML;
+    });
+  </script>
+</body>
+
+</html>
